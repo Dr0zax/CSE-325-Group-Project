@@ -4,5 +4,5 @@
 Andrew Jeppesen
 Spencer Palmer
 David Martinez Burgos
-Hyrum WhittierHyrum Whittier
-Robert AndersonRobert Anderson 
+Hyrum Whittier
+Robert Anderson
