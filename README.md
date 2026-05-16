@@ -3,10 +3,10 @@ study room reservation app
 
 Website for reserving study rooms in the McKay Library
 
-## Target Audience
+### Target Audience
 BYU-I students and faculty
 
-## Project Features
+### Project Features
 home page with a visual map of the library layout with all available rooms
 * Have a map showing the layout of the rooms with color coding to indicate availability
 * Click on rooms to see a schedule and reserve them
