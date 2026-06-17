@@ -131,3 +131,5 @@ C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE-325-Group-Project.Server\obj\De
 C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE-325-Group-Project.Server\obj\Debug\net9.0\CSE325project.Server.pdb
 C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE-325-Group-Project.Server\obj\Debug\net9.0\CSE325project.Server.genruntimeconfig.cache
 C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE-325-Group-Project.Server\obj\Debug\net9.0\ref\CSE325project.Server.dll
+C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE-325-Group-Project.Server\bin\Debug\net9.0\Scalar.AspNetCore.dll
+C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE-325-Group-Project.Server\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
