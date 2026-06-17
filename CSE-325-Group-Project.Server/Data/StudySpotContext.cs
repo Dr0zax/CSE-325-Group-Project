@@ -1,18 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using CSE325project.Shared;
 
 namespace CSE325Project.Server.Data;
 
-public class StudyRoomContext : DbContext
+public class StudySpotContext : DbContext
 {
-    public StudyRoomContext(DbContextOptions<StudyRoomContext> options)
+    public StudySpotContext(DbContextOptions<StudySpotContext> options)
         : base(options)
     {
     }
 
     public DbSet<Room> Rooms => Set<Room>();
     public DbSet<Reservation> Reservations => Set<Reservation>();
-    public DbSet<Amenity> Amenities => Set<Amenity>();
-    public DbSet<RoomAmenity> RoomAmenities => Set<RoomAmenity>();
+    public DbSet<Amenities> Amenities => Set<Amenities>();
+    public DbSet<RoomAmenities> RoomAmenities => Set<RoomAmenities>();
     public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -33,8 +34,49 @@ public class StudyRoomContext : DbContext
             entity.Property(r => r.CreatedAt).HasColumnName("created_at");
         });
 
-        builder.Entity<RoomAmenity>(entity =>
+        builder.Entity<Reservation>(entity =>
         {
+
+            entity.HasKey(r => r.ReservationId);
+
+            entity.Property(r => r.ReservationId).HasColumnName("reservation_id");
+            entity.Property(r => r.RoomId).HasColumnName("room_id");
+            entity.Property(r => r.UserId).HasColumnName("user_id");
+            entity.Property(r => r.StartTime).HasColumnName("start_time");
+            entity.Property(r => r.EndTime).HasColumnName("end_time");
+            entity.Property(r => r.Status).HasColumnName("status");
+            entity.Property(r => r.CreatedAt).HasColumnName("created_at");
+            entity.Property(r => r.UpdatedAt).HasColumnName("updated_at");
+        });
+
+        builder.Entity<Amenities>(entity =>
+        {
+
+            entity.HasKey(a => a.AmenityId);
+
+            entity.Property(a => a.AmenityId).HasColumnName("amenity_id");
+            entity.Property(a => a.Name).HasColumnName("name");
+            entity.Property(a => a.Description).HasColumnName("description");
+            entity.Property(a => a.CreatedAt).HasColumnName("created_at");
+        });
+
+        builder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+            
+            entity.HasKey(u => u.UserId);
+
+            entity.Property(u => u.UserId).HasColumnName("user_id");
+            entity.Property(u => u.FirstName).HasColumnName("first_name");
+            entity.Property(u => u.LastName).HasColumnName("last_name");
+            entity.Property(u => u.Email).HasColumnName("email");
+            entity.Property(u => u.Role).HasColumnName("role");
+            entity.Property(u => u.CreatedAt).HasColumnName("created_at");
+        });
+
+        builder.Entity<RoomAmenities>(entity =>
+        {
+            entity.ToTable("Room_amenities");
 
             entity.HasKey(ra => new { ra.RoomId, ra.AmenityId });
 

@@ -5,18 +5,18 @@ using CSE325project.Shared;
 
 [ApiController]
 [Route("api/[controller]")]
-public class RoomsController : ControllerBase
+public class ReservationController : ControllerBase
 {
     private readonly StudySpotContext _context;
 
-    public RoomsController(StudySpotContext context)
+    public ReservationController(StudySpotContext context)
     {
         _context = context;
     }
 
     [HttpGet]
-    public async Task<IEnumerable<Room>> Get()
+    public async Task<IEnumerable<Reservation>> Get()
     {
-        return await _context.Rooms.ToListAsync();
+        return await _context.Reservations.ToListAsync();
     }
 }

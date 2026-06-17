@@ -1,3 +1,4 @@
+namespace CSE325project.Shared;
 public class Room
 {
     public long RoomId { get; set; }

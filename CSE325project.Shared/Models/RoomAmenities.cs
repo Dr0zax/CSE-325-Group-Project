@@ -1,4 +1,6 @@
-public class RoomAmenity
+namespace CSE325project.Shared;
+
+public class RoomAmenities
 {
     public long RoomId { get; set; }
 

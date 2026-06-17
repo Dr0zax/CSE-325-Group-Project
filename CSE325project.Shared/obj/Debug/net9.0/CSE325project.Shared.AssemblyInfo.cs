@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CSE325project.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+348e81c3585cf6cb07047e7e170613188734461d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66befad8a56d6a805bd3c9cbedf7c1a3b3519932")]
 [assembly: System.Reflection.AssemblyProductAttribute("CSE325project.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CSE325project.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
