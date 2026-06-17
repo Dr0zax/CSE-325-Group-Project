@@ -1,0 +1,48 @@
+@page "/reservation-calendar"
+
+<PageTitle>Reservation Calendar</PageTitle>
+
+<h1>Reservation Calendar</h1>
+
+@if (!string.IsNullOrWhiteSpace(Room))
+{
+    <p>
+        Calendar view for <strong>@Room</strong>
+        @if (!string.IsNullOrWhiteSpace(Floor))
+        {
+            <span>on @Floor</span>
+        }
+    </p>
+}
+else
+{
+    <p>Select a room from the visual floor plan to view its calendar.</p>
+}
+
+<div class="calendar-preview">
+    <div>
+        <strong>Monday</strong>
+    </div>
+    <div>
+        <strong>Tuesday</strong>
+    </div>
+    <div>
+        <strong>Wednesday</strong>
+    </div>
+    <div>
+        <strong>Thursday</strong>
+    </div>
+    <div>
+        <strong>Friday</strong>
+    </div>
+</div>
+
+<a class="button-link secondary" href="/floor-plan">Back to Floor Plan</a>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? Floor { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? Room { get; set; }
+}

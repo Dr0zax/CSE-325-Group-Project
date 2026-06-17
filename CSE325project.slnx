@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/CSE-325-Group-Project.Server/">
+    <Project Path="CSE-325-Group-Project.Server/CSE325project.Server.csproj" />
+  </Folder>
+  <Folder Name="/CSE-325-Group-Project.Client/">
+    <Project Path="CSE-325-Group-Project.Client/CSE325project.Client.csproj" />
+  </Folder>
+  <Project Path="CSE325project.Shared/CSE325project.Shared.csproj" />
+</Solution>
