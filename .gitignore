@@ -1,0 +1,7 @@
+## Ignore generated .NET build output and local IDE files
+
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
