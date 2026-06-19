@@ -1,0 +1,6 @@
+@CSE325project.Server_HostAddress = http://localhost:5034
+
+GET {{CSE325project.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
