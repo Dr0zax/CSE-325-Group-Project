@@ -2937,19 +2937,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\agjep\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE-325-Group-Project.Server\\CSE325project.Server.csproj",
+      "projectUniqueName": "C:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE-325-Group-Project.Server\\CSE325project.Server.csproj",
       "projectName": "CSE325project.Server",
-      "projectPath": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE-325-Group-Project.Server\\CSE325project.Server.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE-325-Group-Project.Server\\obj\\",
+      "projectPath": "C:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE-325-Group-Project.Server\\CSE325project.Server.csproj",
+      "packagesPath": "C:\\Users\\agjep\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE-325-Group-Project.Server\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\agjep\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -2961,8 +2966,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE325project.Shared\\CSE325project.Shared.csproj": {
-              "projectPath": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE325project.Shared\\CSE325project.Shared.csproj"
+            "C:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE325project.Shared\\CSE325project.Shared.csproj": {
+              "projectPath": "C:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE325project.Shared\\CSE325project.Shared.csproj"
             }
           }
         }

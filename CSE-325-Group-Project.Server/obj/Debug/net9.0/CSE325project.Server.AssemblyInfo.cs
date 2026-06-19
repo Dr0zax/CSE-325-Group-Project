@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CSE325project.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f187588c4f2ed4a3b14bb54a38b42ed0d6b5ed6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85f05d375aad1a2b4db60eb546b355e453ee0a0d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CSE325project.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CSE325project.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

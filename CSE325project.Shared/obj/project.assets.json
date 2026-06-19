@@ -8,19 +8,24 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {}
+    "C:\\Users\\agjep\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE325project.Shared\\CSE325project.Shared.csproj",
+      "projectUniqueName": "c:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE325project.Shared\\CSE325project.Shared.csproj",
       "projectName": "CSE325project.Shared",
-      "projectPath": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE325project.Shared\\CSE325project.Shared.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\CSE325\\Reserve\\CSE-325-Group-Project\\CSE325project.Shared\\obj\\",
+      "projectPath": "c:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE325project.Shared\\CSE325project.Shared.csproj",
+      "packagesPath": "C:\\Users\\agjep\\.nuget\\packages\\",
+      "outputPath": "c:\\Users\\agjep\\Documents\\Dev\\CSE-325-StudySpot\\CSE325project.Shared\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\agjep\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
