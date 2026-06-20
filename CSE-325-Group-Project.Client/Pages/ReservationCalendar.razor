@@ -1,48 +1,136 @@
 @page "/reservation-calendar"
+@using System.Net.Http.Json
+@using CSE325project.Shared
+@inject HttpClient Http
 
 <PageTitle>Reservation Calendar</PageTitle>
 
 <h1>Reservation Calendar</h1>
 
-@if (!string.IsNullOrWhiteSpace(Room))
+@if (loading)
 {
-    <p>
-        Calendar view for <strong>@Room</strong>
-        @if (!string.IsNullOrWhiteSpace(Floor))
-        {
-            <span>on @Floor</span>
-        }
-    </p>
+    <p>Loading room calendar...</p>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <p class="calendar-error">@errorMessage</p>
 }
 else
 {
-    <p>Select a room from the visual floor plan to view its calendar.</p>
-}
+    <div class="calendar-controls">
+        <label>
+            Room
+            <select @bind="selectedRoomId">
+                @foreach (var room in rooms)
+                {
+                    <option value="@room.RoomId">@room.RoomName</option>
+                }
+            </select>
+        </label>
 
-<div class="calendar-preview">
-    <div>
-        <strong>Monday</strong>
+        <div>
+            <button @onclick="PreviousWeek">Previous</button>
+            <button @onclick="CurrentWeek">This Week</button>
+            <button @onclick="NextWeek">Next</button>
+        </div>
     </div>
-    <div>
-        <strong>Tuesday</strong>
-    </div>
-    <div>
-        <strong>Wednesday</strong>
-    </div>
-    <div>
-        <strong>Thursday</strong>
-    </div>
-    <div>
-        <strong>Friday</strong>
-    </div>
-</div>
+
+    @if (SelectedRoom is not null)
+    {
+        <h2>Room @SelectedRoom.RoomName</h2>
+        <p>@SelectedRoom.Location · Capacity: @SelectedRoom.Capacity</p>
+        <p><strong>@weekStart.ToString("MMMM d")–@weekStart.AddDays(4).ToString("MMMM d, yyyy")</strong></p>
+
+        <div class="calendar-preview">
+            @foreach (var day in WeekDays)
+            {
+                var dayReservations = ReservationsFor(day);
+
+                <div>
+                    <strong>@day.ToString("dddd")</strong>
+                    <span>@day.ToString("MMM d")</span>
+
+                    @if (dayReservations.Count == 0)
+                    {
+                        <p class="available">No reservations</p>
+                    }
+                    else
+                    {
+                        @foreach (var reservation in dayReservations)
+                        {
+                            <p class="reserved">
+                                @reservation.StartTime.ToString("h:mm tt")–@reservation.EndTime.ToString("h:mm tt")
+                            </p>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    }
+}
 
 <a class="button-link secondary" href="/floor-plan">Back to Floor Plan</a>
 
 @code {
     [SupplyParameterFromQuery]
-    public string? Floor { get; set; }
-
-    [SupplyParameterFromQuery]
     public string? Room { get; set; }
+
+    private List<Room> rooms = new();
+    private List<Reservation> reservations = new();
+    private long selectedRoomId;
+    private DateOnly weekStart = StartOfWeek(DateOnly.FromDateTime(DateTime.Today));
+    private bool loading = true;
+    private string errorMessage = "";
+
+    private Room? SelectedRoom =>
+        rooms.FirstOrDefault(room => room.RoomId == selectedRoomId);
+
+    private IEnumerable<DateOnly> WeekDays =>
+        Enumerable.Range(0, 5).Select(day => weekStart.AddDays(day));
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            rooms = await Http.GetFromJsonAsync<List<Room>>("api/Rooms") ?? new();
+            reservations = await Http.GetFromJsonAsync<List<Reservation>>("api/Reservation") ?? new();
+
+            var requestedRoom = rooms.FirstOrDefault(room =>
+                room.RoomName.Equals(Room, StringComparison.OrdinalIgnoreCase));
+
+            selectedRoomId = requestedRoom?.RoomId ?? rooms.FirstOrDefault()?.RoomId ?? 0;
+        }
+        catch (HttpRequestException)
+        {
+            errorMessage = "Start the server project to load rooms and reservations.";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private List<Reservation> ReservationsFor(DateOnly day)
+    {
+        return reservations
+            .Where(reservation =>
+                reservation.RoomId == selectedRoomId &&
+                DateOnly.FromDateTime(reservation.StartTime) == day &&
+                !string.Equals(reservation.Status, "Canceled", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(reservation => reservation.StartTime)
+            .ToList();
+    }
+
+    private void PreviousWeek() => weekStart = weekStart.AddDays(-7);
+
+    private void NextWeek() => weekStart = weekStart.AddDays(7);
+
+    private void CurrentWeek() =>
+        weekStart = StartOfWeek(DateOnly.FromDateTime(DateTime.Today));
+
+    private static DateOnly StartOfWeek(DateOnly date)
+    {
+        var daysSinceMonday = ((int)date.DayOfWeek + 6) % 7;
+        return date.AddDays(-daysSinceMonday);
+    }
 }
