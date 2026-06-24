@@ -1,5 +1,5 @@
 namespace CSE325project.Shared;
-public class Amenities
+public class Amenity
 {
     public long AmenityId { get; set; }
 

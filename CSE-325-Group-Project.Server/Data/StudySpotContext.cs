@@ -12,8 +12,8 @@ public class StudySpotContext : DbContext
 
     public DbSet<Room> Rooms => Set<Room>();
     public DbSet<Reservation> Reservations => Set<Reservation>();
-    public DbSet<Amenities> Amenities => Set<Amenities>();
-    public DbSet<RoomAmenities> RoomAmenities => Set<RoomAmenities>();
+    public DbSet<Amenity> Amenity => Set<Amenity>();
+    public DbSet<RoomAmenity> RoomAmenity => Set<RoomAmenity>();
     public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -49,7 +49,7 @@ public class StudySpotContext : DbContext
             entity.Property(r => r.UpdatedAt).HasColumnName("updated_at");
         });
 
-        builder.Entity<Amenities>(entity =>
+        builder.Entity<Amenity>(entity =>
         {
 
             entity.HasKey(a => a.AmenityId);
@@ -74,7 +74,7 @@ public class StudySpotContext : DbContext
             entity.Property(u => u.CreatedAt).HasColumnName("created_at");
         });
 
-        builder.Entity<RoomAmenities>(entity =>
+        builder.Entity<RoomAmenity>(entity =>
         {
             entity.ToTable("Room_amenities");
 

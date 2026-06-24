@@ -1,0 +1,117 @@
+@page "/admin"
+
+@inject RoomService RoomService
+@inject UserService UserService
+@inject ReservationService ReservationService
+@inject AmenityService AmenityService
+
+<PageTitle>Administration Dashboard</PageTitle>
+
+<h1>Administration Dashboard</h1>
+
+<p>Welcome to the administration dashboard. Here you can manage users, rooms, and reservations.</p>
+<div class="mt-4">
+    <h3>Quick Actions</h3>
+    <div class="btn-group" role="group">
+        <NavLink class="btn btn-primary" href="user-accounts">Manage Users</NavLink>
+        <NavLink class="btn btn-primary" href="floor-plan">Manage Rooms</NavLink>
+        <NavLink class="btn btn-primary" href="reservations">Manage Reservations</NavLink>
+        <NavLink class="btn btn-primary" href="amenities">Manage Amenities</NavLink>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Rooms</h5>
+                <h2>@RoomCount</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Users</h5>
+                <h2>@UserCount</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Reservations</h5>
+                <h2>@ReservationCount</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Amenities</h5>
+                <h2>@AmenityCount</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+// Upcoming Reservations Section
+<div class="mt-4">
+    <h3>Upcoming Reservations</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>User</th>
+                <th>Room</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* Placeholder for upcoming reservations *@
+            <tr>
+                <td colspan="5" class="text-center">No upcoming reservations.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+// Most Popular Rooms Section
+<div class="mt-4">
+    <h3>Most Popular Rooms</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Room ID</th>
+                <th>Room Name</th>
+                <th>Number of Reservations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* Placeholder for most popular rooms *@
+            <tr>
+                <td colspan="3" class="text-center">No data available.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private int RoomCount { get; set; }
+    private int UserCount { get; set; }
+    private int ReservationCount { get; set; }
+    private int AmenityCount { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        RoomCount = await RoomService.GetRoomCountAsync();
+        UserCount = await UserService.GetUserCountAsync();
+        ReservationCount = await ReservationService.GetReservationCountAsync();
+        AmenityCount = await AmenityService.GetAmenityCountAsync();
+    }
+}

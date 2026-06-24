@@ -15,54 +15,54 @@ public class AmenitiesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<Amenities>> Get()
+    public async Task<IEnumerable<Amenity>> Get()
     {
-        return await _context.Amenities.ToListAsync();
+        return await _context.Amenity.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Amenities>> Get(long id)
+    public async Task<ActionResult<Amenity>> Get(long id)
     {
-        var amenities = await _context.Amenities.FindAsync(id);
-        if (amenities == null)
+        var amenity = await _context.Amenity.FindAsync(id);
+        if (amenity == null)
         {
             return NotFound();
         }
-        return amenities;
+        return amenity;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Amenities>> Post(Amenities amenities)
+    public async Task<ActionResult<Amenity>> Post(Amenity amenity)
     {
-        _context.Amenities.Add(amenities);
+        _context.Amenity.Add(amenity);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(Get), new { id = amenities.AmenityId }, amenities);
+        return CreatedAtAction(nameof(Get), new { id = amenity.AmenityId }, amenity);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Amenities>> Put(long id, Amenities amenities)
+    public async Task<ActionResult<Amenity>> Put(long id, Amenity amenity)
     {
-        if (id != amenities.AmenityId)
+        if (id != amenity.AmenityId)
         {
             return BadRequest();
         }
 
-        _context.Entry(amenities).State = EntityState.Modified;
+        _context.Entry(amenity).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Amenities>> Delete(long id)
+    public async Task<ActionResult<Amenity>> Delete(long id)
     {
-        var amenities = await _context.Amenities.FindAsync(id);
-        if (amenities == null)
+        var amenity = await _context.Amenity.FindAsync(id);
+        if (amenity == null)
         {
             return NotFound();
         }
 
-        _context.Amenities.Remove(amenities);
+        _context.Amenity.Remove(amenity);
         await _context.SaveChangesAsync();
 
         return NoContent();
