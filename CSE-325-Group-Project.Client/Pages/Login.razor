@@ -1,15 +1,76 @@
+@using CSE325project.Client.Services
+@using CSE325project.Shared
+@using Microsoft.AspNetCore.Components.Forms
+
 @page "/login"
+@inject UserService UserService
+@inject NavigationManager Navigation
 
 <PageTitle>Login</PageTitle>
 
 <h1>Login</h1>
 
-<form action="" id="login-form">
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <button type="submit">Submit</button>
-</form>
+<div class="form-container">
+    <form @onsubmit="HandleLogin">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" @bind="loginEmail" id="email" required />
+        </div>
 
-<a class="button-link secondary" href="/">Back Home</a>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" @bind="loginPassword" id="password" required />
+        </div>
+
+        <button type="submit" disabled="@isLoading">
+            @(isLoading ? "Logging in..." : "Login")
+        </button>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="error-message">@errorMessage</div>
+        }
+    </form>
+
+    <p>
+        Don't have an account? <a href="/signup">Create one here</a>
+    </p>
+    <a href="/">Back Home</a>
+</div>
+
+@code {
+    private string loginEmail = "";
+    private string loginPassword = "";
+    private bool isLoading = false;
+    private string errorMessage = "";
+
+    private async Task HandleLogin()
+    {
+        // TODO: Implement actual authentication
+        // For now, this is a placeholder
+        try
+        {
+            isLoading = true;
+            var users = await UserService.GetAllUsersAsync();
+            var user = users.FirstOrDefault(u => u.Email == loginEmail);
+            
+            if (user != null)
+            {
+                // TODO: Store user info in session/local storage
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "User not found";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Login failed: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

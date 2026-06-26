@@ -156,35 +156,7 @@ button {
 
 /* Login Page */
 
-#login-form {
-    max-width: 500px;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
 
-    label {
-        display: block;
-        width: 100%;
-    }
-
-    input {
-        display: block;
-        padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    button {
-        background-color: #1b6ec2;
-        color: white;
-        border: 1px solid #155a9e;
-        border-radius: 6px;
-        text-decoration: none;
-        display: block;
-        padding: 8px 14px;
-    }
-}
 
 @media (max-width: 800px) {
     .floor-layout {
