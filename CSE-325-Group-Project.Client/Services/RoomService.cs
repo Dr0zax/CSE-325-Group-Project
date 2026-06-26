@@ -7,9 +7,9 @@ public class RoomService
 {
     private readonly HttpClient _httpClient;
 
-    public RoomService()
+    public RoomService(HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
     }
 
     public async Task<List<Room>> GetRoomsAsync()

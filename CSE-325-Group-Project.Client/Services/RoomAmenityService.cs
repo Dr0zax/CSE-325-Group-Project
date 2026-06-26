@@ -7,11 +7,10 @@ public class RoomAmenityService
 {
     private readonly HttpClient _httpClient;
 
-    public RoomAmenityService()
+    public RoomAmenityService(HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
     }
-
     public async Task<List<RoomAmenity>> GetRoomAmenitiesAsync()
     {
         var roomAmenities = await _httpClient.GetFromJsonAsync<List<RoomAmenity>>("api/roomamenities");

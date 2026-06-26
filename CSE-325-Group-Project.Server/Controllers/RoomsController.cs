@@ -31,6 +31,13 @@ public class RoomsController : ControllerBase
         return room;
     }
 
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
+    {
+        var count = await _context.Rooms.CountAsync();
+        return count;
+    }
+
     [HttpPost]
     public async Task<ActionResult<Room>> Post(Room room)
     {

@@ -6,9 +6,9 @@ public class ReservationService
 {
     private readonly HttpClient _httpClient;
 
-    public ReservationService()
+    public ReservationService(HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
     }
 
     public async Task<List<Reservation>> GetReservationsAsync()

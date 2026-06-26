@@ -7,9 +7,9 @@ public class AmenityService
 {
     private readonly HttpClient _httpClient;
 
-    public AmenityService()
+    public AmenityService(HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
     }
 
     public async Task<List<Amenity>> GetAmenitiesAsync()

@@ -6,9 +6,9 @@ public class UserService
 {
     private readonly HttpClient _httpClient;
 
-    public UserService()
+    public UserService(HttpClient httpClient)
     {
-        _httpClient = new HttpClient();
+        _httpClient = httpClient;
     }
 
     public async Task<List<User>> GetUsersAsync()
