@@ -1,5 +1,8 @@
+using System.Text;
 using CSE325Project.Server.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,14 +21,40 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy
-            .WithOrigins(
-                "https://localhost:5059",
-                "http://localhost:5059"
-            )
+            .SetIsOriginAllowed(origin =>
+            {
+                if (string.IsNullOrWhiteSpace(origin))
+                {
+                    return false;
+                }
+
+                return Uri.TryCreate(origin, UriKind.Absolute, out var uri)
+                    && (uri.Host == "localhost" || uri.Host == "127.0.0.1");
+            })
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
 });
+
+builder.Services.AddScoped<AuthenticationService>();
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
+            ),
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidateLifetime = true
+        };
+    });
 
 var app = builder.Build();
 
@@ -41,8 +70,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowFrontend");
 app.UseRouting();
+app.UseCors("AllowFrontend");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

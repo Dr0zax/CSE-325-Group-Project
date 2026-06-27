@@ -3,70 +3,78 @@
 @using Microsoft.AspNetCore.Components.Forms
 
 @page "/login"
-@inject UserService UserService
+@inject AuthService AuthService
 @inject NavigationManager Navigation
 
 <PageTitle>Login</PageTitle>
 
-<h1>Login</h1>
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>Login</h1>
 
-<div class="form-container">
-    <form @onsubmit="HandleLogin">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" @bind="loginEmail" id="email" required />
+        <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <InputText @bind-Value="loginModel.Email" id="email" class="form-control" placeholder="Enter your email" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText @bind-Value="loginModel.Password" id="password" type="password" class="form-control" placeholder="Enter your password" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            <button type="submit" class="btn btn-primary w-100" disabled="@isLoading">
+                @(isLoading ? "Logging in..." : "Login")
+            </button>
+        </EditForm>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="/register">Create one here</a></p>
+            <p><a href="/">Back Home</a></p>
         </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" @bind="loginPassword" id="password" required />
-        </div>
-
-        <button type="submit" disabled="@isLoading">
-            @(isLoading ? "Logging in..." : "Login")
-        </button>
-
-        @if (!string.IsNullOrEmpty(errorMessage))
-        {
-            <div class="error-message">@errorMessage</div>
-        }
-    </form>
-
-    <p>
-        Don't have an account? <a href="/signup">Create one here</a>
-    </p>
-    <a href="/">Back Home</a>
+    </div>
 </div>
 
 @code {
-    private string loginEmail = "";
-    private string loginPassword = "";
+    private LoginModel loginModel = new();
     private bool isLoading = false;
     private string errorMessage = "";
 
+    private class LoginModel
+    {
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+
     private async Task HandleLogin()
     {
-        // TODO: Implement actual authentication
-        // For now, this is a placeholder
         try
         {
             isLoading = true;
-            var users = await UserService.GetAllUsersAsync();
-            var user = users.FirstOrDefault(u => u.Email == loginEmail);
-            
-            if (user != null)
+            errorMessage = "";
+
+            var result = await AuthService.LoginAsync(loginModel.Email, loginModel.Password);
+
+            if (result.Success)
             {
-                // TODO: Store user info in session/local storage
                 Navigation.NavigateTo("/");
             }
             else
             {
-                errorMessage = "User not found";
+                errorMessage = result.Message ?? "Login failed";
             }
         }
         catch (Exception ex)
         {
-            errorMessage = $"Login failed: {ex.Message}";
+            errorMessage = $"Login error: {ex.Message}";
         }
         finally
         {

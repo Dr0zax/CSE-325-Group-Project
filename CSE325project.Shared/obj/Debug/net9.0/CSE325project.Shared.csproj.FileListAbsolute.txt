@@ -10,3 +10,15 @@ C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE325project.Shared\obj\Debug\net9
 C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE325project.Shared\obj\Debug\net9.0\refint\CSE325project.Shared.dll
 C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.pdb
 C:\Code\CSE325\Reserve\CSE-325-Group-Project\CSE325project.Shared\obj\Debug\net9.0\ref\CSE325project.Shared.dll
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\bin\Debug\net9.0\CSE325project.Shared.deps.json
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\bin\Debug\net9.0\CSE325project.Shared.dll
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\bin\Debug\net9.0\CSE325project.Shared.pdb
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.AssemblyInfoInputs.cache
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.AssemblyInfo.cs
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.csproj.CoreCompileInputs.cache
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.sourcelink.json
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.dll
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\refint\CSE325project.Shared.dll
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\CSE325project.Shared.pdb
+C:\Users\agjep\Documents\Dev\CSE-325-StudySpot\CSE325project.Shared\obj\Debug\net9.0\ref\CSE325project.Shared.dll
