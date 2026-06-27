@@ -137,22 +137,87 @@ button {
     margin: 16px 0 24px;
 }
 
-.calendar-preview {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(110px, 1fr));
-    gap: 10px;
-    max-width: 760px;
+.calendar-controls {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: 900px;
     margin: 18px 0;
 }
 
-.calendar-preview div {
-    min-height: 90px;
+.calendar-controls label {
+    display: grid;
+    gap: 6px;
+    font-weight: bold;
+}
+
+.calendar-controls select {
+    min-width: 220px;
+    padding: 8px;
+    border: 1px solid #9abce3;
+    border-radius: 6px;
+    background-color: white;
+}
+
+.calendar-controls div {
+    display: flex;
+    gap: 8px;
+}
+
+.calendar-controls button {
+    border: 1px solid #9abce3;
+    border-radius: 6px;
+    background-color: #f7f7f7;
+    color: #1b6ec2;
+}
+
+.calendar-preview {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(130px, 1fr));
+    gap: 10px;
+    max-width: 900px;
+    margin: 18px 0;
+}
+
+.calendar-preview > div {
+    min-height: 150px;
     border: 1px solid #bbb;
     border-radius: 6px;
     padding: 10px;
     background-color: #f7f7f7;
+}
 
-    
+.calendar-preview span {
+    display: block;
+    margin: 4px 0 12px;
+    color: #555;
+}
+
+.calendar-preview p {
+    margin: 7px 0;
+    padding: 7px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.calendar-preview .available {
+    background-color: #e9f1fb;
+    color: #155a9e;
+}
+
+.calendar-preview .reserved {
+    background-color: #dedede;
+    color: #333;
+}
+
+.calendar-error {
+    max-width: 600px;
+    padding: 12px;
+    border: 1px solid #d99a9a;
+    border-radius: 6px;
+    background-color: #fff0f0;
+    color: #8a1f1f;
 }
 
 /* Login & Registration Pages */
@@ -254,5 +319,14 @@ button {
         min-width: 38px;
         padding: 4px 5px;
         font-size: 0.75rem;
+    }
+
+    .calendar-controls {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .calendar-preview {
+        grid-template-columns: 1fr;
     }
 }
