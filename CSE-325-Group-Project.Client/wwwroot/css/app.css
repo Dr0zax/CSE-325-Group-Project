@@ -125,6 +125,7 @@ button {
     padding: 8px 14px;
 }
 
+
 .button-link.secondary {
     background-color: #f7f7f7;
     color: #1b6ec2;
@@ -218,6 +219,96 @@ button {
     background-color: #fff0f0;
     color: #8a1f1f;
 }
+
+/* Login & Registration Pages */
+
+.alert {
+    display: block;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 0 0 1rem 0;
+}
+
+.alert-danger {
+    background-color: rgb(255, 166, 166);
+    
+}
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    background: #ffffff;
+    border: 1px solid #e3e8ef;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(27,110,194,0.08);
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-card h1 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: #163b5a;
+}
+
+.form-group {
+    margin-bottom: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #c7d2e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #1b6ec2;
+    box-shadow: 0 0 0 3px rgba(27,110,194,0.08);
+}
+
+.auth-footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #566b7a;
+}
+
+.auth-footer a {
+    color: #1b6ec2;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #1b6ec2;
+    color: #fff;
+    border: 1px solid #155a9e;
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+}
+
+.btn-primary[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+    .auth-card { padding: 1.25rem; }
+    .auth-card h1 { font-size: 1.25rem; }
+}
+
+
+
 
 @media (max-width: 800px) {
     .floor-layout {

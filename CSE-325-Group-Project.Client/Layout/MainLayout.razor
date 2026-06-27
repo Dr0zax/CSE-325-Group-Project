@@ -1,4 +1,9 @@
-﻿@inherits LayoutComponentBase
+﻿@using CSE325project.Client.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,7 +11,14 @@
 
     <main>
         <div class="top-row">
-            <a href="login">Login</a>
+            <AuthorizeView>
+                <Authorized>
+                    <button class="button-link" @onclick="LogoutAsync">Logout</button>
+                </Authorized>
+                <NotAuthorized>
+                    <a  class="button-link" href="login">Login</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
         <article class="content">
@@ -14,3 +26,11 @@
         </article>
     </main>
 </div>
+
+@code {
+    private async Task LogoutAsync()
+    {
+        await AuthService.LogoutAsync();
+        Navigation.NavigateTo("/", forceLoad: true);
+    }
+}
