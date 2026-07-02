@@ -47,6 +47,16 @@ public class StudySpotContext : DbContext
             entity.Property(r => r.Status).HasColumnName("status");
             entity.Property(r => r.CreatedAt).HasColumnName("created_at");
             entity.Property(r => r.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(r => r.Room)
+                .WithMany(r => r.Reservations)
+                .HasForeignKey(r => r.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         builder.Entity<Amenity>(entity =>

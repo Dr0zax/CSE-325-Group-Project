@@ -60,7 +60,6 @@
     </div>
 </div>
 
-// Upcoming Reservations Section
 <div class="mt-4">
     <h3>Upcoming Reservations</h3>
     <table class="table table-striped">
@@ -74,7 +73,16 @@
             </tr>
         </thead>
         <tbody>
-            @* Placeholder for upcoming reservations *@
+            @foreach (var upcomingReservationsDto in UpComingReservations)
+            {
+                <tr>
+                    <td>@upcomingReservationsDto.ReservationId</td>
+                    <td>@upcomingReservationsDto.Email</td>
+                    <td>@upcomingReservationsDto.RoomName</td>
+                    <td>@upcomingReservationsDto.ReservationDate.ToShortDateString()</td>
+                    <td>@upcomingReservationsDto.ReservationTime.ToString(@"hh\:mm")</td>
+                </tr>
+            }
             <tr>
                 <td colspan="5" class="text-center">No upcoming reservations.</td>
             </tr>
@@ -82,7 +90,6 @@
     </table>
 </div>
 
-// Most Popular Rooms Section
 <div class="mt-4">
     <h3>Most Popular Rooms</h3>
     <table class="table table-striped">
@@ -94,10 +101,14 @@
             </tr>
         </thead>
         <tbody>
-            @* Placeholder for most popular rooms *@
-            <tr>
-                <td colspan="3" class="text-center">No data available.</td>
-            </tr>
+            @foreach (var room in MostPopularRooms)
+            {
+                <tr>
+                    <td>@room.RoomId</td>
+                    <td>@room.RoomName</td>
+                    <td>@room.ReservationCount</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
@@ -107,6 +118,8 @@
     private int UserCount { get; set; }
     private int ReservationCount { get; set; }
     private int AmenityCount { get; set; }
+    private List<RoomReservationCountDto> MostPopularRooms { get; set; } = new List<RoomReservationCountDto>();
+    private List<UpcomingReservationsDto> UpComingReservations { get; set; } = new List<UpcomingReservationsDto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -114,5 +127,7 @@
         UserCount = await UserService.GetUserCountAsync();
         ReservationCount = await ReservationService.GetReservationCountAsync();
         AmenityCount = await AmenityService.GetAmenityCountAsync();
+        MostPopularRooms = await ReservationService.GetReservationCountsAsync();
+        UpComingReservations = await ReservationService.GetUpcomingReservationsAsync();
     }
 }

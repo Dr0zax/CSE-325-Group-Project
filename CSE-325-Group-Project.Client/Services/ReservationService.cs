@@ -49,4 +49,17 @@ public class ReservationService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<int>();
     }
+
+    public async Task<List<RoomReservationCountDto>> GetReservationCountsAsync()
+    {
+        var response = await _httpClient.GetAsync("api/reservation/counts");
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<List<RoomReservationCountDto>>() ?? new List<RoomReservationCountDto>();
+    }
+
+    public async Task<List<UpcomingReservationsDto>> GetUpcomingReservationsAsync()
+    {
+        var reservations = await _httpClient.GetFromJsonAsync<List<UpcomingReservationsDto>>("api/reservation/upcoming");
+        return reservations ?? new List<UpcomingReservationsDto>();
+    }
 }

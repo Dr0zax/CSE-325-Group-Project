@@ -56,4 +56,10 @@ public class RoomService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<int>();
     }
+
+    public async Task<List<Room>> GetMostPopularRoomsAsync()
+    {
+        var rooms = await _httpClient.GetFromJsonAsync<List<Room>>("api/rooms/popular");
+        return rooms ?? new List<Room>();
+    }
 }
