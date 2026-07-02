@@ -1,5 +1,7 @@
 @page "/admin/usermanager"
 
+@inject UserService UserService
+
 <h1>User Manager</h1>
 
 <div class="mt-4">
@@ -14,3 +16,50 @@
 </div>
 
 <p>This is the user manager page.</p>
+
+<!-- Add your user management functionality here -->
+<!-- For example, you can display a list of users, allow adding/editing/deleting users, etc. -->
+
+<div class="mt-4">
+    <h3>Manage Users</h3>
+    <!-- Example: Display a list of users -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through users and display them here -->
+            @foreach (var user in Users)
+            {
+                <tr>
+                    <td>@user.FirstName @user.LastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                    <td>
+                        <!-- Add buttons for editing and deleting users -->
+                        <button class="btn btn-sm btn-primary">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                        <button class="btn btn-sm btn-secondary">Promote</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    private List<User> Users { get; set; } = new List<User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch users from the UserService
+        Users = await UserService.GetUsersAsync();
+    }
+
+}

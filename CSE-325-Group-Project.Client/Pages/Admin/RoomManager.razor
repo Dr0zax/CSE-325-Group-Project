@@ -1,5 +1,7 @@
 @page "/admin/roommanager"
 
+@inject RoomService RoomService
+
 <h1>Room Manager</h1>
 
 <div class="mt-4">
@@ -14,3 +16,49 @@
 </div>
 
 <p>This is the room manager page.</p>
+
+<div class=""mt-4">
+    <h3>Manage Rooms</h3>
+    <!-- Example: Display a list of rooms -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Room Name</th>
+                <th>Location</th>
+                <th>Capacity</th>
+                <th>Description</th>
+                <th>Is Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through rooms and display them here -->
+            @foreach (var room in Rooms)
+            {
+                <tr>
+                    <td>@room.RoomName</td>
+                    <td>@room.Location</td>
+                    <td>@room.Capacity</td>
+                    <td>@room.Description</td>
+                    <td>@room.IsActive</td>
+                    <td>
+                        <!-- Add buttons for editing and deleting rooms -->
+                        <button class="btn btn-sm btn-primary">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    private List<Room> Rooms { get; set; } = new List<Room>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch the list of rooms from the RoomService
+        Rooms = await RoomService.GetRoomsAsync();
+    }
+}
