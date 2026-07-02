@@ -51,7 +51,8 @@ public class StudySpotContext : DbContext
 
         builder.Entity<Amenity>(entity =>
         {
-
+            entity.ToTable("Amenities");
+            
             entity.HasKey(a => a.AmenityId);
 
             entity.Property(a => a.AmenityId).HasColumnName("amenity_id");

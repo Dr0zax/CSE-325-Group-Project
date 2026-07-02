@@ -31,6 +31,13 @@ public class UsersController : ControllerBase
         return user;
     }
 
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
+    {
+        var count = await _context.Users.CountAsync();
+        return count;
+    }
+
     [HttpPost]
     public async Task<ActionResult<User>> Post(User user)
     {

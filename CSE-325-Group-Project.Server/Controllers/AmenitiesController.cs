@@ -31,6 +31,13 @@ public class AmenitiesController : ControllerBase
         return amenity;
     }
 
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
+    {
+        var count = await _context.Amenity.CountAsync();
+        return count;
+    }
+
     [HttpPost]
     public async Task<ActionResult<Amenity>> Post(Amenity amenity)
     {

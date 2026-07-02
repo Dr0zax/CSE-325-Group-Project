@@ -21,7 +21,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Reservation>> Get(long id)
+    public async Task<ActionResult<Reservation>> Get(Guid id)
     {
         var reservation = await _context.Reservations.FindAsync(id);
         if (reservation == null)
@@ -29,6 +29,13 @@ public class ReservationController : ControllerBase
             return NotFound();
         }
         return reservation;
+    }
+
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
+    {
+        var count = await _context.Reservations.CountAsync();
+        return count;
     }
 
     [HttpPost]
@@ -40,7 +47,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Reservation>> Put(long id, Reservation reservation)
+    public async Task<ActionResult<Reservation>> Put(Guid id, Reservation reservation)
     {
         if (id != reservation.ReservationId)
         {
@@ -54,7 +61,7 @@ public class ReservationController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Reservation>> Delete(long id)
+    public async Task<ActionResult<Reservation>> Delete(Guid id)
     {
         var reservation = await _context.Reservations.FindAsync(id);
         if (reservation == null)

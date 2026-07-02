@@ -2,11 +2,11 @@ namespace CSE325project.Shared;
 
 public class Reservation
 {
-    public long ReservationId { get; set; }
+    public Guid ReservationId { get; set; }
 
     public long RoomId { get; set; }
 
-    public long UserId { get; set; }
+    public Guid UserId { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
