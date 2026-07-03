@@ -17,7 +17,7 @@ if (File.Exists(envFile))
         var parts = line.Split('=', 2);
         if (parts.Length == 2)
         {
-            Environment.SetEnvironmentVariable(parts[0], parts[1]);
+            Environment.SetEnvironmentVariable(parts[0].Trim(), parts[1].Trim());
         }
     }
 }
@@ -83,6 +83,7 @@ builder.Services
             ValidateLifetime = true
         };
     });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -102,3 +103,4 @@ app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.Run();

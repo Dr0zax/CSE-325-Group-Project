@@ -201,14 +201,39 @@ button {
     font-size: 0.9rem;
 }
 
+.calendar-preview .slot-button {
+    display: block;
+    width: 100%;
+    margin: 7px 0;
+    padding: 7px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
 .calendar-preview .available {
     background-color: #e9f1fb;
     color: #155a9e;
 }
 
+.calendar-preview .available:hover {
+    background-color: #d7eaff;
+}
+
 .calendar-preview .reserved {
     background-color: #dedede;
     color: #333;
+    cursor: not-allowed;
+}
+
+.calendar-note {
+    max-width: 600px;
+    padding: 10px 12px;
+    border: 1px solid #9abce3;
+    border-radius: 6px;
+    background-color: #f3f8ff;
+    color: #155a9e;
 }
 
 .calendar-error {
@@ -218,6 +243,20 @@ button {
     border-radius: 6px;
     background-color: #fff0f0;
     color: #8a1f1f;
+}
+
+.appointments-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    margin-top: 18px;
+}
+
+.appointments-table th,
+.appointments-table td {
+    border-bottom: 1px solid #d7d7d7;
+    padding: 10px;
+    text-align: left;
 }
 
 /* Login & Registration Pages */
