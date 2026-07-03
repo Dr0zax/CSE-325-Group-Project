@@ -62,4 +62,10 @@ public class ReservationService
         var reservations = await _httpClient.GetFromJsonAsync<List<UpcomingReservationsDto>>("api/reservation/upcoming");
         return reservations ?? new List<UpcomingReservationsDto>();
     }
+
+    public async Task<List<ReservationManagerDto>> GetReservationsForManagerAsync()
+    {
+        var reservations = await _httpClient.GetFromJsonAsync<List<ReservationManagerDto>>("api/reservation/manager");
+        return reservations ?? new List<ReservationManagerDto>();
+    }
 }

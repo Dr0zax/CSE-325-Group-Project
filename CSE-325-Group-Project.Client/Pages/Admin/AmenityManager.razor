@@ -1,5 +1,7 @@
 @page "/admin/amenitymanager"
 
+@inject AmenityService AmenityService
+
 <h1>Amenity Manager</h1>
 
 <div class="mt-4">
@@ -13,4 +15,45 @@
     </div>
 </div>
 
-<p>This is the amenity manager page.</p>
+<div class="mt-4">
+    <h3>Manage Amenities</h3>
+    <div class="btn-group" role="group">
+        <NavLink class="btn btn-primary" href="admin/amenitymanager/addamenity">Add Amenity</NavLink>
+    </div>
+    <!-- Example: Display a list of amenities -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Amenity Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through amenities and display them here -->
+            @foreach (var amenity in Amenities)
+            {
+                <tr>
+                    <td>@amenity.Name</td>
+                    <td>@amenity.Description</td>
+                    <td>
+                        <!-- Add buttons for editing and deleting amenities -->
+                        <button class="btn btn-sm btn-primary">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+
+    private List<Amenity> Amenities { get; set; } = new List<Amenity>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch the list of amenities from the service
+        Amenities = await AmenityService.GetAmenitiesAsync();
+    }
+}

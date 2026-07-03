@@ -115,4 +115,23 @@ public class ReservationController : ControllerBase
             })
             .ToListAsync();
     }
+
+    [HttpGet ("reseravtions/manager")]
+
+    public async Task<List<ReservationManagerDto>> GetReservationsForManagementAsync()
+    {
+        return await _context.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Room)
+            .Select(r => new ReservationManagerDto
+            {
+                ReservationId = r.ReservationId,
+                Email = r.User.Email ?? "",
+                RoomName = r.Room.RoomName ?? "",
+                StartDate = r.StartTime,
+                EndDate = r.EndTime,
+                Status = r.Status ?? ""
+            })
+            .ToListAsync();
+    }
 }
