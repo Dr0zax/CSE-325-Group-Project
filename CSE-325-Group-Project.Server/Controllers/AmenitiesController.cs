@@ -15,9 +15,17 @@ public class AmenitiesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<Amenity>> Get()
+    public async Task<ActionResult<IEnumerable<AmenityDto>>> Get()
     {
-        return await _context.Amenity.ToListAsync();
+        var amenities = await _context.Amenity
+            .Select(a => new AmenityDto
+            {
+                AmenityId = a.AmenityId,
+                Name = a.Name
+            })
+            .ToListAsync();
+
+        return Ok(amenities);
     }
 
     [HttpGet("{id}")]
@@ -74,4 +82,6 @@ public class AmenitiesController : ControllerBase
 
         return NoContent();
     }
+
+    
 }

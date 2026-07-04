@@ -62,4 +62,6 @@ public class RoomService
         var rooms = await _httpClient.GetFromJsonAsync<List<Room>>("api/rooms/popular");
         return rooms ?? new List<Room>();
     }
+
+    
 }

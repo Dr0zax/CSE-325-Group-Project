@@ -36,4 +36,10 @@ public class RoomAmenityService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<RoomAmenity>() ?? throw new Exception("Failed to update room amenity.");
     }
+
+    public async Task<List<long>> GetAmenitiesByRoomIdAsync(long roomId)
+    {
+        var amenities = await _httpClient.GetFromJsonAsync<List<long>>($"api/rooms/{roomId}/amenities");
+        return amenities ?? new List<long>();
+    }
 }

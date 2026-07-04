@@ -57,7 +57,7 @@ public class RoomsController : ControllerBase
         _context.Entry(room).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return Ok(room);
     }
 
     [HttpDelete("{id}")]

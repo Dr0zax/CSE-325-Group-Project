@@ -67,4 +67,14 @@ public class RoomAmenitiesController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("/api/rooms/{roomId}/amenities")]
+    public async Task<ActionResult<IEnumerable<long>>> GetAmenitiesByRoomId(long roomId)
+    {
+        var amenities = await _context.RoomAmenity
+            .Where(ra => ra.RoomId == roomId)
+            .Select(ra => ra.AmenityId)
+            .ToListAsync();
+        return amenities;
+    }
 }

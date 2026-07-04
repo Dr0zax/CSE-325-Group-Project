@@ -1,6 +1,8 @@
 @page "/admin/roommanager"
 
 @inject RoomService RoomService
+@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
 
 <h1>Room Manager</h1>
 
@@ -20,7 +22,7 @@
 <div class=""mt-4">
     <h3>Manage Rooms</h3>
     <div class="btn-group" role="group">
-        <NavLink class="btn btn-primary" href="admin/roommanager/addroom">Add Room</NavLink>
+        <NavLink class="btn btn-primary" href="admin/roommanager/addroom" @onclick="AddRoom">Add Room</NavLink>
     </div>
     <!-- Example: Display a list of rooms -->
     <table class="table">
@@ -46,8 +48,8 @@
                     <td>@room.IsActive</td>
                     <td>
                         <!-- Add buttons for editing and deleting rooms -->
-                        <button class="btn btn-sm btn-primary">Edit</button>
-                        <button class="btn btn-sm btn-danger">Delete</button>
+                        <button class="btn btn-sm btn-primary" @onclick="() => EditRoom(room.RoomId)">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteRoom(room.RoomId)">Delete</button>
                     </td>
                 </tr>
             }
@@ -58,6 +60,33 @@
 @code {
 
     private List<Room> Rooms { get; set; } = new List<Room>();
+
+    private async Task DeleteRoom(long roomId)
+    {
+        // Confirm deletion with the user
+        bool confirmed = await JS.InvokeAsync<bool>("confirm", $"Are you sure you want to delete room with ID {roomId}?");
+        if (confirmed)
+        {
+            // Call the RoomService to delete the room
+            await RoomService.DeleteRoomAsync(roomId);
+
+            // Refresh the list of rooms after deletion
+            Rooms = await RoomService.GetRoomsAsync();
+        }
+    }
+
+    private async Task EditRoom(long roomId)
+    {
+        // Navigate to the edit room page with the room ID
+        NavigationManager.NavigateTo($"/admin/roommanager/editroom/{roomId}");
+    }
+
+    private async Task AddRoom()
+    {
+        // Navigate to the add room page
+        NavigationManager.NavigateTo("/admin/roommanager/addroom");
+    }
+    
 
     protected override async Task OnInitializedAsync()
     {

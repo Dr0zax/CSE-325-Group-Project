@@ -12,10 +12,10 @@ public class AmenityService
         _httpClient = httpClient;
     }
 
-    public async Task<List<Amenity>> GetAmenitiesAsync()
+    public async Task<List<AmenitySelectionDto>> GetAmenitiesAsync()
     {
-        var amenities = await _httpClient.GetFromJsonAsync<List<Amenity>>("api/amenities");
-        return amenities ?? new List<Amenity>();
+        var amenities = await _httpClient.GetFromJsonAsync<List<AmenitySelectionDto>>("api/amenities");
+        return amenities ?? new List<AmenitySelectionDto>();
     }
 
     public async Task<Amenity?> GetAmenityByIdAsync(long amenityId)
