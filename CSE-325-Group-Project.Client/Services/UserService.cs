@@ -17,27 +17,26 @@ public class UserService
         return users ?? new List<User>();
     }
 
-    public async Task<User?> GetUserByIdAsync(long userId)
+    public async Task<User?> GetUserByIdAsync(Guid userId)
     {
         var user = await _httpClient.GetFromJsonAsync<User>($"api/users/{userId}");
         return user;
     }
 
-    public async Task<User> CreateUserAsync(User user)
+    public async Task<User> AddUserAsync(User user)
     {
         var response = await _httpClient.PostAsJsonAsync("api/users", user);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<User>() ?? throw new Exception("Failed to create user.");
     }
 
-    public async Task<User> UpdateUserAsync(User user)
+    public async Task UpdateUserAsync(User user)
     {
         var response = await _httpClient.PutAsJsonAsync($"api/users/{user.UserId}", user);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<User>() ?? throw new Exception("Failed to update user.");
     }
 
-    public async Task DeleteUserAsync(long userId)
+    public async Task DeleteUserAsync(Guid userId)
     {
         var response = await _httpClient.DeleteAsync($"api/users/{userId}");
         response.EnsureSuccessStatusCode();

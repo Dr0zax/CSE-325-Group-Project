@@ -1,6 +1,7 @@
 @page "/admin/usermanager"
 
 @inject UserService UserService
+@inject NavigationManager NavigationManager
 
 <h1>User Manager</h1>
 
@@ -23,6 +24,11 @@
 <div class="mt-4">
     <h3>Manage Users</h3>
     <!-- Example: Display a list of users -->
+    <div>
+        <div class="btn-group" role="group">
+            <NavLink class="btn btn-primary" href="admin/usermanager/adduser" @onclick="AddUser">Add User</NavLink>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -42,9 +48,8 @@
                     <td>@user.Role</td>
                     <td>
                         <!-- Add buttons for editing and deleting users -->
-                        <button class="btn btn-sm btn-primary">Edit</button>
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                        <button class="btn btn-sm btn-secondary">Promote</button>
+                        <button class="btn btn-sm btn-primary" @onclick="() => EditUser(user.UserId)">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteUser(user.UserId)">Delete</button>
                     </td>
                 </tr>
             }
@@ -55,6 +60,26 @@
 @code {
 
     private List<User> Users { get; set; } = new List<User>();
+
+    private void EditUser(Guid userId)
+    {
+        // Navigate to the edit user page with the selected user's ID
+        NavigationManager.NavigateTo($"/admin/usermanager/edit/{userId}");
+    }
+
+    private async Task DeleteUser(Guid userId)
+    {
+        // Call the UserService to delete the user
+        await UserService.DeleteUserAsync(userId);
+        // Refresh the user list after deletion
+        Users = await UserService.GetUsersAsync();
+    }
+
+    private void AddUser()
+    {
+        // Navigate to the add user page
+        NavigationManager.NavigateTo("/admin/usermanager/adduser");
+    }
 
     protected override async Task OnInitializedAsync()
     {
