@@ -2,6 +2,7 @@
 
 @using Microsoft.AspNetCore.Components.Forms
 @inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
 
 @inject UserService UserService
 
@@ -60,6 +61,7 @@
         // Call the UserService to add the new user
         await UserService.AddUserAsync(newUser);
         successMessage = "User added successfully!";
+        NotificationService.ShowSuccess($"User '{newUser.FirstName} {newUser.LastName}' added successfully.");
         // Optionally, navigate back to the user manager page after adding
         NavigationManager.NavigateTo("/admin/usermanager");
     }

@@ -2,6 +2,7 @@
 
 @inject RoomService RoomService
 @inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
 
 <h1>Add Room</h1>
 <div>
@@ -59,6 +60,7 @@
         if (addedRoom != null)
         {
             successMessage = $"Room '{addedRoom.RoomName}' added successfully!";
+            NotificationService.ShowSuccess($"Room '{addedRoom.RoomName}' added successfully.");
             // Optionally, reset the form or navigate back to the room manager page
             newRoom = new Room(); // Reset the form
         }

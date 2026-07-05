@@ -2,7 +2,9 @@
 
 @inject UserService UserService
 @inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
 
+<PageTitle>User Manager</PageTitle>
 <h1>User Manager</h1>
 
 <div class="mt-4">
@@ -16,7 +18,12 @@
     </div>
 </div>
 
-<p>This is the user manager page.</p>
+@if (!string.IsNullOrEmpty(NotificationService.SuccessMessage))
+{
+    <div class="alert alert-success">
+        @NotificationService.SuccessMessage
+    </div>
+}
 
 <!-- Add your user management functionality here -->
 <!-- For example, you can display a list of users, allow adding/editing/deleting users, etc. -->

@@ -3,6 +3,7 @@
 @inject RoomService RoomService
 @inject IJSRuntime JS
 @inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
 
 <h1>Room Manager</h1>
 
@@ -17,7 +18,12 @@
     </div>
 </div>
 
-<p>This is the room manager page.</p>
+@if (!string.IsNullOrEmpty(NotificationService.SuccessMessage))
+{
+    <div class="alert alert-success">
+        @NotificationService.SuccessMessage
+    </div>
+}
 
 <div class=""mt-4">
     <h3>Manage Rooms</h3>

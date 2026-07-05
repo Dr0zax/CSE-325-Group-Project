@@ -1,6 +1,7 @@
 @page "/admin/reservationmanager"
 
 @inject ReservationService ReservationService
+@inject NotificationService NotificationService
 
 <h1>Reservation Manager</h1>
 
@@ -14,6 +15,13 @@
         <NavLink class="btn btn-primary" href="admin/amenitymanager">Manage Amenities</NavLink>
     </div>
 </div>
+
+@if (!string.IsNullOrEmpty(NotificationService.SuccessMessage))
+{
+    <div class="alert alert-success">
+        @NotificationService.SuccessMessage
+    </div>
+}
 
 <div class="mt-4">
     <h3>Manage Reservations</h3>

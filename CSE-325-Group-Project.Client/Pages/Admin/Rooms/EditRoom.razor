@@ -4,6 +4,7 @@
 @inject AmenityService AmenityService
 @inject RoomAmenityService RoomAmenityService
 @inject NavigationManager NavigationManager
+@inject NotificationService NotificationService
 
 <h1>Edit Room</h1>
 <div>
@@ -121,6 +122,7 @@
                 }
             }
             successMessage = "Room updated successfully!";
+            NotificationService.ShowSuccess($"Room '{updatedRoom.RoomName}' updated successfully.");
             // Optionally, navigate back to the room manager page after a successful update
             NavigationManager.NavigateTo("/admin/roommanager");
         }

@@ -4,6 +4,7 @@
 @inject UserService UserService
 @inject ReservationService ReservationService
 @inject AmenityService AmenityService
+@inject NotificationService NotificationService
 
 <PageTitle>Administration Dashboard</PageTitle>
 
@@ -20,6 +21,13 @@
         <NavLink class="btn btn-primary" href="admin/amenitymanager">Manage Amenities</NavLink>
     </div>
 </div>
+
+@if (!string.IsNullOrEmpty(NotificationService.SuccessMessage))
+{
+    <div class="alert alert-success">
+        @NotificationService.SuccessMessage
+    </div>
+}
 
 <div class="row">
 
