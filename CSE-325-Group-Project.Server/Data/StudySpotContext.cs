@@ -12,8 +12,8 @@ public class StudySpotContext : DbContext
 
     public DbSet<Room> Rooms => Set<Room>();
     public DbSet<Reservation> Reservations => Set<Reservation>();
-    public DbSet<Amenities> Amenities => Set<Amenities>();
-    public DbSet<RoomAmenities> RoomAmenities => Set<RoomAmenities>();
+    public DbSet<Amenity> Amenity => Set<Amenity>();
+    public DbSet<RoomAmenity> RoomAmenity => Set<RoomAmenity>();
     public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -47,11 +47,22 @@ public class StudySpotContext : DbContext
             entity.Property(r => r.Status).HasColumnName("status");
             entity.Property(r => r.CreatedAt).HasColumnName("created_at");
             entity.Property(r => r.UpdatedAt).HasColumnName("updated_at");
+
+            entity.HasOne(r => r.Room)
+                .WithMany(r => r.Reservations)
+                .HasForeignKey(r => r.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
-        builder.Entity<Amenities>(entity =>
+        builder.Entity<Amenity>(entity =>
         {
-
+            entity.ToTable("Amenities");
+            
             entity.HasKey(a => a.AmenityId);
 
             entity.Property(a => a.AmenityId).HasColumnName("amenity_id");
@@ -74,12 +85,12 @@ public class StudySpotContext : DbContext
             entity.Property(u => u.CreatedAt).HasColumnName("created_at");
         });
 
-        builder.Entity<RoomAmenities>(entity =>
+        builder.Entity<RoomAmenity>(entity =>
         {
             entity.ToTable("Room_amenities");
 
             entity.HasKey(ra => new { ra.RoomId, ra.AmenityId });
-
+            entity.Property(ra => ra.RoomAmenityId).HasColumnName("room_amenity_id");
             entity.Property(ra => ra.RoomId).HasColumnName("room_id");
             entity.Property(ra => ra.AmenityId).HasColumnName("amenity_id");
         });

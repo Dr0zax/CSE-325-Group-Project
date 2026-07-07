@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Server",
+            "type": "shell",
+            "command": "dotnet run",
+            "options": {
+                "cwd": "${workspaceFolder}/CSE325Project.Server"
+            },
+            "isBackground": true
+        },
+        {
+            "label": "Run Client",
+            "type": "shell",
+            "command": "dotnet watch run",
+            "options": {
+                "cwd": "${workspaceFolder}/CSE325Project.Client"
+            },
+            "isBackground": true
+        },
+        {
+            "label": "Run Both",
+            "dependsOn": [
+                "Run Server",
+                "Run Client"
+            ]
+        }
+    ]
+}

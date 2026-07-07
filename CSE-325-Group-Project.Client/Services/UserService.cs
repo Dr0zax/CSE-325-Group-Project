@@ -31,9 +31,10 @@ public class UserService
         }
     }
 
-    public async Task<List<User>> GetAllUsersAsync()
+    public async Task<List<UserListDto>> GetAllUsersAsync()
     {
-        return await _http.GetFromJsonAsync<List<User>>("api/users") ?? new();
+        return await _http.GetFromJsonAsync<List<UserListDto>>("api/users")
+            ?? new List<UserListDto>();
     }
 
     public async Task UpdateUserAsync(Guid id, User user)
@@ -46,5 +47,12 @@ public class UserService
     {
         var response = await _http.DeleteAsync($"api/users/{id}");
         response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<int> GetUserCountAsync()
+    {
+        var response = await _http.GetAsync("api/users/count");
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<int>();
     }
 }

@@ -15,56 +15,73 @@ public class AmenitiesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<Amenities>> Get()
+    public async Task<ActionResult<IEnumerable<AmenityDto>>> Get()
     {
-        return await _context.Amenities.ToListAsync();
+        var amenities = await _context.Amenity
+            .Select(a => new AmenityDto
+            {
+                AmenityId = a.AmenityId,
+                Name = a.Name
+            })
+            .ToListAsync();
+
+        return Ok(amenities);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Amenities>> Get(long id)
+    public async Task<ActionResult<Amenity>> Get(long id)
     {
-        var amenities = await _context.Amenities.FindAsync(id);
-        if (amenities == null)
+        var amenity = await _context.Amenity.FindAsync(id);
+        if (amenity == null)
         {
             return NotFound();
         }
-        return amenities;
+        return amenity;
+    }
+
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
+    {
+        var count = await _context.Amenity.CountAsync();
+        return count;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Amenities>> Post(Amenities amenities)
+    public async Task<ActionResult<Amenity>> Post(Amenity amenity)
     {
-        _context.Amenities.Add(amenities);
+        _context.Amenity.Add(amenity);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(Get), new { id = amenities.AmenityId }, amenities);
+        return CreatedAtAction(nameof(Get), new { id = amenity.AmenityId }, amenity);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<Amenities>> Put(long id, Amenities amenities)
+    public async Task<ActionResult<Amenity>> Put(long id, Amenity amenity)
     {
-        if (id != amenities.AmenityId)
+        if (id != amenity.AmenityId)
         {
             return BadRequest();
         }
 
-        _context.Entry(amenities).State = EntityState.Modified;
+        _context.Entry(amenity).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Amenities>> Delete(long id)
+    public async Task<ActionResult<Amenity>> Delete(long id)
     {
-        var amenities = await _context.Amenities.FindAsync(id);
-        if (amenities == null)
+        var amenity = await _context.Amenity.FindAsync(id);
+        if (amenity == null)
         {
             return NotFound();
         }
 
-        _context.Amenities.Remove(amenities);
+        _context.Amenity.Remove(amenity);
         await _context.SaveChangesAsync();
 
         return NoContent();
     }
+
+    
 }

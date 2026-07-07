@@ -1,6 +1,6 @@
 namespace CSE325project.Shared;
 
-public class RoomAmenities
+public class RoomAmenity
 {
     public long RoomAmenityId { get; set; }
     public long RoomId { get; set; }
