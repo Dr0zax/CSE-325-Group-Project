@@ -1,51 +1,50 @@
-using System.Net.Http.Json;
 using CSE325project.Shared;
+using System.Net.Http.Json;
 
 namespace CSE325project.Client.Services;
+
 public class UserService
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _http;
 
-    public UserService(HttpClient httpClient)
+    public UserService(HttpClient http)
     {
-        _httpClient = httpClient;
+        _http = http;
     }
 
-    public async Task<List<User>> GetUsersAsync()
+    public async Task<User> CreateUserAsync(User user)
     {
-        var users = await _httpClient.GetFromJsonAsync<List<User>>("api/users");
-        return users ?? new List<User>();
-    }
-
-    public async Task<User?> GetUserByIdAsync(Guid userId)
-    {
-        var user = await _httpClient.GetFromJsonAsync<User>($"api/users/{userId}");
-        return user;
-    }
-
-    public async Task<User> AddUserAsync(User user)
-    {
-        var response = await _httpClient.PostAsJsonAsync("api/users", user);
+        var response = await _http.PostAsJsonAsync("api/users", user);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<User>() ?? throw new Exception("Failed to create user.");
+        return await response.Content.ReadFromJsonAsync<User>() ?? throw new InvalidOperationException("Failed to read created user.");
     }
 
-    public async Task UpdateUserAsync(User user)
+    public async Task<User?> GetUserByIdAsync(Guid id)
     {
-        var response = await _httpClient.PutAsJsonAsync($"api/users/{user.UserId}", user);
+        try
+        {
+            return await _http.GetFromJsonAsync<User>($"api/users/{id}");
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public async Task<List<User>> GetAllUsersAsync()
+    {
+        return await _http.GetFromJsonAsync<List<User>>("api/users") ?? new();
+    }
+
+    public async Task UpdateUserAsync(Guid id, User user)
+    {
+        var response = await _http.PutAsJsonAsync($"api/users/{id}", user);
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task DeleteUserAsync(Guid userId)
+    public async Task DeleteUserAsync(Guid id)
     {
-        var response = await _httpClient.DeleteAsync($"api/users/{userId}");
+        var response = await _http.DeleteAsync($"api/users/{id}");
         response.EnsureSuccessStatusCode();
-    }
-
-    public async Task<int> GetUserCountAsync()
-    {
-        var response = await _httpClient.GetAsync("api/users/count");
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<int>();
     }
 }
