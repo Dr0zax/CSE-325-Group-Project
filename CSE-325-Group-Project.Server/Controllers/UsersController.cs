@@ -15,9 +15,18 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<User>> Get()
+    public async Task<IEnumerable<UserListDto>> Get()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Users.Select(u => new UserListDto
+        {
+            UserId = u.UserId,
+            Email = u.Email,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            IsActive = u.IsActive,
+            Role = u.Role
+        }).ToListAsync();
+
     }
 
     [HttpGet("{id}")]

@@ -68,7 +68,7 @@
     private async Task UpdateUser()
     {
         // Update the user details using the UserService
-        await UserService.UpdateUserAsync(user);
+        await UserService.UpdateUserAsync(UserId, user);
         successMessage = "User updated successfully!";
         NotificationService.ShowSuccess($"User '{user.FirstName} {user.LastName}' updated successfully.");
         NavigationManager.NavigateTo("/admin/usermanager");
@@ -77,7 +77,7 @@
     private async Task HandleValidSubmit()
     {
         // Update the user details using the UserService
-        await UserService.UpdateUserAsync(user);
+        await UserService.UpdateUserAsync(UserId, user);
         NotificationService.ShowSuccess($"User '{user.FirstName} {user.LastName}' updated successfully.");
         NavigationManager.NavigateTo("/admin/usermanager");
     }

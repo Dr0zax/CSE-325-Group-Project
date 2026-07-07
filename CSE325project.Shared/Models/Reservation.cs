@@ -17,4 +17,7 @@ public class Reservation
     public DateTime EndTime { get; set; }
 
     public string? Status { get; set; }
+
+    public Room? Room { get; set; }
+    public User? User { get; set; }
 }

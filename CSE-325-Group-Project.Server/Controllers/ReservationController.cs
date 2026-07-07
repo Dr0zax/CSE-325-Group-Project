@@ -235,4 +235,70 @@ public class ReservationController : ControllerBase
         var daysSinceMonday = ((int)date.DayOfWeek + 6) % 7;
         return date.AddDays(-daysSinceMonday);
     }
+
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
+    {
+        var count = await _context.Reservations.CountAsync();
+        return count;
+    }
+
+    [HttpGet("counts")]
+    public async Task<List<RoomReservationCountDto>> GetReservationCountsAsync()
+    {
+        return await _context.Reservations
+            .GroupBy(r => r.RoomId)
+            .Select(g => new RoomReservationCountDto
+            {
+                RoomId = g.Key,
+                ReservationCount = g.Count()
+            })
+            .Join(_context.Rooms,
+                g => g.RoomId,
+                r => r.RoomId,
+                (g, r) => new RoomReservationCountDto
+                {
+                    RoomId = r.RoomId,
+                    RoomName = r.RoomName,
+                    ReservationCount = g.ReservationCount
+                })
+            .ToListAsync();
+    }
+
+    [HttpGet("upcoming")]
+    public async Task<List<UpcomingReservationsDto>> GetUpcomingReservationsAsync()
+    {
+        var now = DateTime.UtcNow;
+        return await _context.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Room)
+            .Where(r => r.StartTime > now)
+            .Select(r => new UpcomingReservationsDto
+            {
+                ReservationId = r.ReservationId,
+                Email = r.User.Email ?? "",
+                RoomName = r.Room.RoomName ?? "",
+                ReservationDate = r.StartTime,
+                ReservationTime = r.StartTime.TimeOfDay
+            })
+            .ToListAsync();
+    }
+
+    [HttpGet ("reseravtions/manager")]
+    public async Task<List<ReservationManagerDto>> GetReservationsForManagementAsync()
+    {
+        return await _context.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Room)
+            .Select(r => new ReservationManagerDto
+            {
+                ReservationId = r.ReservationId,
+                Email = r.User.Email ?? "",
+                RoomName = r.Room.RoomName ?? "",
+                StartDate = r.StartTime,
+                EndDate = r.EndTime,
+                Status = r.Status ?? ""
+            })
+            .ToListAsync();
+    }
 }
