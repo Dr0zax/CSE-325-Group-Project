@@ -1,0 +1,29 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy the full repo so both client and server source files are available
+COPY . .
+
+RUN dotnet restore "CSE-325-Group-Project.Server/CSE325project.Server.csproj"
+
+# Publish client (Blazor WebAssembly static files)
+WORKDIR /src/CSE-325-Group-Project.Client
+RUN dotnet publish "CSE325project.Client.csproj" -c Release -o /app/clientpublish
+
+# Publish server
+WORKDIR /src/CSE-325-Group-Project.Server
+RUN dotnet publish "CSE325project.Server.csproj" -c Release -o /app/serverpublish
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+
+# Copy server publish
+COPY --from=build /app/serverpublish/ ./
+
+# Copy client static files into server wwwroot
+COPY --from=build /app/clientpublish/wwwroot/ ./wwwroot/
+
+EXPOSE 80
+
+# Use the PORT env injected by Render (or default to 80)
+ENTRYPOINT ["sh", "-c", "dotnet CSE325project.Server.dll --urls http://0.0.0.0:${PORT:-80}"]

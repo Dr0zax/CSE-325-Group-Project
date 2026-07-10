@@ -17,7 +17,7 @@ builder.Services.AddScoped<ReservationService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped(_ => new HttpClient
 {
-    BaseAddress = new Uri("http://localhost:5034/")
+    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 });
 
 builder.Services.AddAuthorizationCore();
@@ -31,7 +31,7 @@ builder.Services.AddScoped<HttpClient>(provider =>
 {
     var handler = provider.GetRequiredService<JwtAuthorizationMessageHandler>();
     handler.InnerHandler = new HttpClientHandler();
-    return new HttpClient(handler) { BaseAddress = new Uri("http://localhost:5034") };
+    return new HttpClient(handler) { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 });
 
 await builder.Build().RunAsync();
