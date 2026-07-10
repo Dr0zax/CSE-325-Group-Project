@@ -259,6 +259,32 @@ button {
     text-align: left;
 }
 
+/* User account page */
+
+.account-details {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.account-detail-label {
+    font-weight: bold;
+}
+
+.account-detail {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.change-form {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+}
+
 /* Login & Registration Pages */
 
 .alert {

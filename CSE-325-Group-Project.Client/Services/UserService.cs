@@ -31,6 +31,18 @@ public class UserService
         }
     }
 
+    public async Task<User?> GetCurrentUserAsync()
+    {
+        try
+        {
+            return await _http.GetFromJsonAsync<User>("api/users/me");
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
     public async Task<List<UserListDto>> GetAllUsersAsync()
     {
         return await _http.GetFromJsonAsync<List<UserListDto>>("api/users")
@@ -41,6 +53,30 @@ public class UserService
     {
         var response = await _http.PutAsJsonAsync($"api/users/{id}", user);
         response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<(bool Success, string Message)> UpdateEmailAsync(UpdateEmailRequest request)
+    {
+        var response = await _http.PutAsJsonAsync("api/users/me/email", request);
+        if (!response.IsSuccessStatusCode)
+        {
+            var message = await response.Content.ReadAsStringAsync();
+            return (false, string.IsNullOrWhiteSpace(message) ? "Unable to update email right now." : message);
+        }
+
+        return (true, "Email updated successfully.");
+    }
+
+    public async Task<(bool Success, string Message)> UpdatePasswordAsync(UpdatePasswordRequest request)
+    {
+        var response = await _http.PutAsJsonAsync("api/users/me/password", request);
+        if (!response.IsSuccessStatusCode)
+        {
+            var message = await response.Content.ReadAsStringAsync();
+            return (false, string.IsNullOrWhiteSpace(message) ? "Unable to update password right now." : message);
+        }
+
+        return (true, "Password updated successfully.");
     }
 
     public async Task DeleteUserAsync(Guid id)

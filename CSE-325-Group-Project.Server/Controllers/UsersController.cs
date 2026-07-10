@@ -2,9 +2,12 @@ using CSE325Project.Server.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CSE325project.Shared;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly StudySpotContext _context;
@@ -40,6 +43,24 @@ public class UsersController : ControllerBase
         return user;
     }
 
+    [HttpGet("me")]
+    public async Task<ActionResult<User>> GetCurrentUser()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId) || !Guid.TryParse(userId, out var parsedId))
+        {
+            return Unauthorized();
+        }
+
+        var user = await _context.Users.FindAsync(parsedId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(user);
+    }
+
     [HttpGet("count")]
     public async Task<ActionResult<int>> GetCount()
     {
@@ -69,6 +90,79 @@ public class UsersController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("me/email")]
+    public async Task<ActionResult> UpdateEmail(UpdateEmailRequest request)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId) || !Guid.TryParse(userId, out var parsedId))
+        {
+            return Unauthorized();
+        }
+
+        var user = await _context.Users.FindAsync(parsedId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Email))
+        {
+            return BadRequest("Email is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.CurrentPassword) || !BCrypt.Net.BCrypt.Verify(request.CurrentPassword, user.PasswordHash))
+        {
+            return BadRequest("Current password is incorrect.");
+        }
+
+        var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email.ToLower().Trim() && u.UserId != user.UserId);
+        if (existingUser != null)
+        {
+            return BadRequest("An account with this email already exists.");
+        }
+
+        user.Email = request.Email.ToLower().Trim();
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
+    [HttpPut("me/password")]
+    public async Task<ActionResult> UpdatePassword(UpdatePasswordRequest request)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId) || !Guid.TryParse(userId, out var parsedId))
+        {
+            return Unauthorized();
+        }
+
+        var user = await _context.Users.FindAsync(parsedId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (string.IsNullOrWhiteSpace(request.CurrentPassword) || !BCrypt.Net.BCrypt.Verify(request.CurrentPassword, user.PasswordHash))
+        {
+            return BadRequest("Current password is incorrect.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.NewPassword) || request.NewPassword.Length < 8)
+        {
+            return BadRequest("Password must be at least 8 characters long.");
+        }
+
+        if (request.NewPassword != request.ConfirmNewPassword)
+        {
+            return BadRequest("Passwords do not match.");
+        }
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<User>> Delete(Guid id)
     {
@@ -83,6 +177,4 @@ public class UsersController : ControllerBase
 
         return NoContent();
     }
-
-    
 }
