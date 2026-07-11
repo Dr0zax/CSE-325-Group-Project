@@ -55,6 +55,7 @@ else
                     <td>@reservation.StartTime.ToString("MMM d, yyyy")</td>
                     <td>@reservation.StartTime.ToString("h:mm tt") - @reservation.EndTime.ToString("h:mm tt")</td>
                     <td>
+                        <a class="button-link secondary" href="@($"/appointments/edit/{reservation.ReservationId}")">Edit</a>
                         <button disabled="@deleting" @onclick="() => DeleteReservation(reservation.ReservationId)">
                             Delete
                         </button>
