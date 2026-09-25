@@ -1,4 +1,4 @@
-# CSE-325-Group-Project
+# StudySpot
 study room reservation app
 
 Website for reserving study rooms in the McKay Library
